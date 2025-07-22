@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - LiveEase</title>
+  <link rel="stylesheet" href="/css/register.css" />
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.background {
+  height: 100vh;
+  background: linear-gradient(135deg, #461654,#B200F2 );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Card Styling */
+.register-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  color: #fff;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Header */
+.register-header h2 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.register-header p {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 25px;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 18px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 15px;
+  transition: background 0.3s ease;
+}
+.form-group input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+.form-group input:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+  outline: none;
+}
+
+/* Button */
+.register-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  /* background: linear-gradient(to right, #461654,#B200F2 ); */
+  background: #461654;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.register-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Footer Text */
+.login-text {
+  margin-top: 25px;
+  font-size: 14px;
+  text-align: center;
+}
+.login-text a {
+  color: #38f9d7;
+  text-decoration: none;
+  font-weight: bold;
+}
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+  .register-card {
+    padding: 25px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="background">
+  <div class="register-card">
+    <div class="register-header">
+      <h2>Create Account</h2>
+      <p>Join Avaas Dwaar and start your journey</p>
+    </div>
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" placeholder="Enter Your Full Name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter Your Email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter Your Password" required />
+      </div>
+      <button type="submit" class="register-btn">Register</button>
+    </form>
+    <p class="login-text">Already have an account? <a href="/user/home/login">Login</a></p>
+  </div>
+</div>
+
+<script>
+  document.getElementById("registerForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const fullName = document.getElementById("fullName").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (fullName && email && password) {
+      alert("Registration successful! Redirecting to login...");
+      window.location.href = "/user/home/login";
+    } else {
+      alert("Please fill in all fields.");
+    }
+  });
+</script>
+
+</body>
+</html>

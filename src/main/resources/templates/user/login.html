@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - LiveEase</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background */
+        body,
+        html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .background {
+            height: 100vh;
+            background: linear-gradient(135deg, #461654, #B200F2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Card */
+        .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* Header */
+        .login-header h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .login-header p {
+            margin-bottom: 30px;
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: none;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group input:focus {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Button */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #00c6ff;
+            /* background: linear-gradient(to right,  #461654,#B200F2 ); */
+            background: #461654;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Signup */
+        .signup-text {
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        .signup-text a {
+            color: #00c6ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 480px) {
+            .login-card {
+                padding: 25px;
+            }
+
+            .login-header h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="login-card">
+            <div class="login-header">
+                <h2>Welcome Back</h2>
+                <p>Login to your Avaas Dwaar account</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter Your Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter Your Password" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <p class="signup-text">Don't have an account? <a href="/user/home/register">Register</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (email && password) {
+                window.location.href = "/user/home";
+            } else {
+                alert("Please enter valid credentials");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

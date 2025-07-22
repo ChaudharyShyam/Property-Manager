@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Page - LiveEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* General Container */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 60px 20px;
+            box-sizing: border-box;
+        }
+
+        /* Header Section */
+        .header-section {
+            width: 100%;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #9acd32, #00c853);
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: -22px;
+            z-index: -20;
+        }
+
+        .header-section .mainh {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .header-section .mainp {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* premium section  */
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            padding: 60px 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 480px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            background: #fff;
+        }
+
+        .premium-card {
+            background: linear-gradient(135deg, #f7b731, #f7a700);
+            color: white;
+        }
+
+        .premium-card .card-content {
+            text-align: center;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, #56ccf2, #6e7dff);
+            color: white;
+        }
+
+        .contact-card .card-content {
+            text-align: center;
+        }
+
+        .card h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .custom-button {
+            padding: 14px 32px;
+            background: linear-gradient(145deg, #3a8dff, #1e6aff);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .custom-button:hover {
+            background: linear-gradient(145deg, #1e6aff, #3a8dff);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-button.alt {
+            background: linear-gradient(145deg, #ff6f61, #ff4b41);
+        }
+
+        .custom-button.alt:hover {
+            background: linear-gradient(145deg, #ff4b41, #ff6f61);
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                max-width: 100%;
+                margin-bottom: 30px;
+            }
+
+            .card h2 {
+                font-size: 1.8rem;
+            }
+
+            .card p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .header-section .mainh {
+                font-size: 2.2rem;
+            }
+
+            .header-section .mainp {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div
+        class="social-bar bg-white border-bottom py-0 px-3 d-flex justify-content-between align-items-center flex-wrap">
+        <!-- Left: Social Icons -->
+        <div class="d-flex gap-3">
+            <a href="#" class="text-dark fs-5"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-linkedin"></i></a>
+        </div>
+        <!-- Right: Buttons -->
+        <div class="d-flex gap-2">
+            <a href="#" class="btn btn-sm btn-outline-dark">What's New</a>
+            <a href="#" class="btn btn-sm btn-outline-dark">Login</a>
+        </div>
+    </div>
+
+
+    <!-- main header  -->
+
+    <header class="sticky-header">
+        <div class="brand-section container-fluid">
+            <div class="d-flex align-items-center gap-3">
+                <img src="/images/logo.jpg" alt="CA Logo" style="height: 50px;">
+                <div>
+                    <h5 class="mb-0 fw-bold" style="color:var(--theme-color)">Aavaas Dwaar</h5>
+                    <small class="text-muted">Find Your Dream Home</small>
+                </div>
+            </div>
+            <button class="navbar-toggler d-lg-none ms-auto" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="contact-sectionn d-none d-lg-flex">
+                <span class="contact-text">We feel happy to talk</span>
+                <span class="phone-number text-dark"><i class="bi bi-telephone-fill"></i> +91 9930097046</span>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-section">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="/user/home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/properties">Propeties</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/payment">premium</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/contact">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- page sart -->
+
+    <div class="header-section">
+        <div class="header-content">
+            <h1 class="mainh">Buy or Rent Your Dream Home</h1>
+            <p class="mainp">Explore our exclusive listings and get in touch with property owners.</p>
+
+        </div>
+    </div>
+
+    <!-- Premium Section -->
+    <section class="cards-container">
+        <!-- Premium Card -->
+        <div class="card premium-card">
+            <div class="card-content">
+                <h2>Unlock Exclusive Benefits!</h2>
+                <p>Get early access to new listings, special offers, and personalized property suggestions.</p>
+                <a href="#" class="custom-button">Get Premium Now</a>
+            </div>
+        </div>
+
+        <!-- Contact Card -->
+        <div class="card contact-card">
+            <div class="card-content">
+                <h2>Contact Property Owners Directly</h2>
+                <p>Reach out to property owners to discuss your next home or rental option.</p>
+                <a href="/user/home/contact" class="custom-button alt">Contact Now</a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-col about">
+                <h2>About Aavaas Dwaar</h2>
+                <p>
+                    At Aavaas Dwaar, we open the door to your dream property. Rooted in trust and inspired by tradition,
+                    our name means "Gateway to Home", reflecting our mission to connect people with the perfect space to
+                    call their own. Whether you're buying, selling, or exploring, we simplify real estate with
+                    transparency, technology, and a personal touch.
+                </p>
+                <img src="/images/logo.jpg" alt="Company Logo" class="footer-logo">
+            </div>
+
+            <div class="footer-col links">
+                <h2>Properties in India</h2>
+                <ul>
+                    <li><a href="#">New Delhi</a></li>
+                    <li><a href="#">Chennai</a></li>
+                    <li><a href="#">Gurgaon</a></li>
+                    <li><a href="#">Bangalore</a></li>
+                    <li><a href="#">Ahmedabad</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col links">
+                <h2>QUICK LINKS</h2>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Properties</a></li>
+                    <li><a href="#">Premium</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="contact-box">
+                <i class="icon">&#128205;</i>
+                <div>
+                    <h3>Disclaimer</h3>
+                    <p>The information provided on this website is for general purposes only. Aavaas Dwaar <br>is not
+                        liable
+                        for any decisions made based on listed property data or third-party content.</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <i class="icon">&#128241;</i>
+                <div>
+                    <h3>PHONE</h3>
+                    <p>We feel happy to talk<br>+91 - 9999999999</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <i class="icon">&#9993;</i>
+                <div>
+                    <h3>EMAIL</h3>
+                    <p>Write Your Message<br>Aavaasdwaar@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copy">
+            <p>© <a href="#">www.aavaasdwaar@gmail.com</a> by <strong>Shyam Chaudhary</strong></p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll(
+                '.brand-section, .contact-section, .footer-col, .contact-box'
+            );
+
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const inView = rect.top < window.innerHeight - 50;
+
+                if (inView) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        // Trigger on load, scroll, and a short delay after load for smoothness
+        window.addEventListener('DOMContentLoaded', handleScrollAnimation);
+        window.addEventListener('load', () => {
+            handleScrollAnimation();
+            setTimeout(handleScrollAnimation, 100);
+        });
+        window.addEventListener('scroll', handleScrollAnimation);
+
+    </script>
+</body>
+
+</html>

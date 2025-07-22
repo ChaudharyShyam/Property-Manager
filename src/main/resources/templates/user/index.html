@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Properties</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .carousel {
+            margin-top: -22px;
+            z-index: -10;
+        }
+
+        .property-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .property-card {
+            width: 360px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .property-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .property-card:hover .property-img {
+            transform: scale(1.1);
+        }
+
+        .property-body {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .property-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .property-details {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #f9f9f9;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .property-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #f1f1f1;
+        }
+
+        .btn-pay,
+        .btn-review {
+            padding: 8px 12px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-pay {
+            background-color: var(--theme-color);
+        }
+
+        .btn-pay:hover {
+            background-color: var(--hover-color);
+        }
+
+        .btn-review {
+            background-color: #17a2b8;
+        }
+
+        .btn-review:hover {
+            background-color: #138496;
+        }
+
+        /* testimonial styling  */
+
+        .testimonial-section {
+            background: var(--theme-color);
+            padding: 30px 20px;
+            width: 100%;
+            margin: 35px 0px 30px;
+        }
+
+        .testimonial-section h2 {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-slide {
+            display: none;
+            background-color: #ffffff;
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.6s ease;
+        }
+
+        .testimonial-slide.active {
+            display: block;
+        }
+
+        .testimonial-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #007bff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            font-size: 1.2rem;
+            color: #444;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-author {
+            font-size: 1rem;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .testimonial-nav {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .testimonial-nav button {
+            background-color: #007bff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .testimonial-nav button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 576px) {
+            .testimonial-slide {
+                padding: 20px 10px;
+            }
+
+            .testimonial-image {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div
+        class="social-bar bg-white border-bottom py-0 px-3 d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex gap-3">
+            <a href="#" class="text-dark fs-5"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-linkedin"></i></a>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="#" class="btn btn-sm btn-outline-dark">What's New</a>
+            <a href="#" class="btn btn-sm btn-outline-dark">Login</a>
+        </div>
+    </div>
+    <!-- main header  -->
+    <header class="sticky-header">
+        <div class="brand-section container-fluid">
+            <div class="d-flex align-items-center gap-3">
+                <img src="/images/logo.jpg" alt="CA Logo" style="height: 50px;">
+                <div>
+                    <h5 class="mb-0 fw-bold" style="color:var(--theme-color)">Aavaas Dwaar</h5>
+                    <small class="text-muted">Find Your Dream Home</small>
+                </div>
+            </div>
+            <button class="navbar-toggler d-lg-none ms-auto" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="contact-section d-none d-lg-flex">
+                <span class="contact-text">We feel happy to talk</span>
+                <span class="phone-number text-dark"><i class="bi bi-telephone-fill"></i> +91 9967061610</span>
+            </div>
+        </div>
+    </header>
+    <!-- Main Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-section">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="/user/home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/properties">Propeties</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/payment">premium</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/contact">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- slider section -->
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/images/slider-1.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/slider-2.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/slider-3.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+
+    <!-- Search Bar & Filter -->
+    <div class="search-filter-container">
+        <!-- Search Form -->
+        <form action="/user/search" method="get" class="custom-search-form">
+            <input type="text" name="keyword" class="custom-input" placeholder="Search properties..." />
+            <button type="submit" class="custom-button">
+                🔍 Search
+            </button>
+        </form>
+
+        <!-- Filter Dropdown -->
+        <div class="custom-filter-box">
+            <label for="category" class="custom-label">Filter by Property Type:</label>
+            <select id="category" class="custom-select" onchange="filterProperties(this.value)">
+                <option value="all">All</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+                <option value="villa">Villa</option>
+            </select>
+        </div>
+    </div>
+
+
+
+    <!-- All Properties -->
+
+    <div class="container mt-5" id="featuredProperties">
+        <h2 class="text-center"><b>Featured Properties</b></h2><br>
+        <th:block th:if="${propertyList != null and propertyList.size() > 0}">
+            <div class="property-grid">
+                <div class="property-card" th:each="property : ${propertyList}">
+                    <img th:src="${property.imageUrl}" th:alt="${property.name}" class="property-img">
+
+                    <div class="property-body">
+                        <div class="property-header">
+                            <h5 th:text="${property.name}" class="property-title">Property Name</h5>
+                            <div class="property-location">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" />
+                                </svg>
+                                <span th:text="${property.location}">Location</span>
+                            </div>
+                        </div>
+
+                        <p class="property-details">
+                            <strong>Type:</strong> <span th:text="${property.type}">Type</span><br>
+                            <strong>Description:</strong> <span th:text="${property.description}">Description</span>
+                        </p>
+                    </div>
+
+                    <div class="property-footer">
+                        <div class="status">
+                            <strong>Status:</strong> <span th:text="${property.status}">Status</span>
+                        </div>
+                        <div class="price">
+                            ₹<span th:text="${property.price}">Price</span>/month
+                        </div>
+                    </div>
+
+                    <div class="property-buttons">
+                        <a href="/user/home/payment" class="btn-pay">Pay Now</a>
+                        <a th:href="@{/user/reviews/{propertyId}(propertyId=${property.id})}" class="btn-review">View
+                            Reviews</a>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+
+
+    <!-- Testimonials -->
+
+    <div class="testimonial-section">
+        <h2 class="text-center">What Our Customers Say</h2>
+        <div class="testimonial-wrapper">
+            <div class="testimonial-slide active">
+                <img src="/images/testimonials-1.jpg" alt="Omkar" class="testimonial-image">
+                <p class="testimonial-text">The dream home takes shape here in reality!</p>
+                <p class="testimonial-author">Jhonn Doe</p>
+            </div>
+            <div class="testimonial-slide">
+                <img src="/images/testimonials-2.jpg" alt="Priya" class="testimonial-image">
+                <p class="testimonial-text">A completely stress-free process – found my dream home with zero hassle!</p>
+                <p class="testimonial-author">Shyam Chaudhary</p>
+            </div>
+            <!-- Add more slides as needed -->
+            <div class="testimonial-nav">
+                <button onclick="prevTestimonial()">‹</button>
+                <button onclick="nextTestimonial()">›</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Newsletter Subscription -->
+    <div class="newsletter">
+        <h3>Subscribe to Our Newsletter</h3>
+        <form action="/user/subscribe" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+
+    <!-- Footer Section -->
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-col about">
+                <h2>About Aavaas Dwaar</h2>
+                <p>
+                    At Aavaas Dwaar, we open the door to your dream property. Rooted in trust and inspired by tradition,
+                    our name means "Gateway to Home", reflecting our mission to connect people with the perfect space to
+                    call their own. Whether you're buying, selling, or exploring, we simplify real estate with
+                    transparency, technology, and a personal touch.
+                </p>
+                <img src="/images/logo.jpg" alt="Company Logo" class="footer-logo">
+            </div>
+
+            <div class="footer-col links">
+                <h2>Properties in India</h2>
+                <ul>
+                    <li><a href="#">New Delhi</a></li>
+                    <li><a href="#">Chennai</a></li>
+                    <li><a href="#">Gurgaon</a></li>
+                    <li><a href="#">Bangalore</a></li>
+                    <li><a href="#">Ahmedabad</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col links">
+                <h2>QUICK LINKS</h2>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Properties</a></li>
+                    <li><a href="#">Premium</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="contact-box">
+                <i class="icon">&#128205;</i>
+                <div>
+                    <h3>Disclaimer</h3>
+                    <p>The information provided on this website is for general purposes only. Aavaas Dwaar <br>is not
+                        liable
+                        for any decisions made based on listed property data or third-party content.</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <i class="icon">&#128241;</i>
+                <div>
+                    <h3>PHONE</h3>
+                    <p>We feel happy to talk<br>+91 - 9999999999</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <i class="icon">&#9993;</i>
+                <div>
+                    <h3>EMAIL</h3>
+                    <p>Write Your Message<br>Aavaasdwaar@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copy">
+            <p>© <a href="#">www.aavaasdwaar@gmail.com</a> by <strong>Shyam Chaudhary</strong></p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        /* function buyProperty() {
+            alert("Redirecting to Buy Property page...");
+            window.location.href = "/buy";
+        } */
+
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll(
+                '.brand-section, .contact-section, .footer-col, .contact-box'
+            );
+
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const inView = rect.top < window.innerHeight - 50;
+
+                if (inView) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        // Trigger on load, scroll, and a short delay after load for smoothness
+        window.addEventListener('DOMContentLoaded', handleScrollAnimation);
+        window.addEventListener('load', () => {
+            handleScrollAnimation();
+            setTimeout(handleScrollAnimation, 100);
+        });
+        window.addEventListener('scroll', handleScrollAnimation);
+
+
+
+
+        function filterProperties() {
+            let category = document.getElementById("category").value;
+            if (category === "all") {
+
+                window.location.href = "/user/home";
+            } else {
+
+                window.location.href = "/user/filter?type=" + category;
+            }
+            window.location.href = "/user/filter?type=" + category;
+        }
+
+        // testimonial javascript 
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.testimonial-slide');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) slide.classList.add('active');
+            });
+        }
+
+        function nextTestimonial() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function prevTestimonial() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        // Optional: Auto-play
+        setInterval(nextTestimonial, 5000);
+
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Properties</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        .property-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .property-card {
+            width: 360px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .property-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .property-card:hover .property-img {
+            transform: scale(1.1);
+        }
+
+        .property-body {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .property-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .property-details {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #f9f9f9;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .property-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #f1f1f1;
+        }
+
+        .btn-pay,
+        .btn-review {
+            padding: 8px 12px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-pay {
+            background-color: var(--theme-color);
+        }
+
+        .btn-pay:hover {
+            background-color: var(--hover-color);
+        }
+
+        .btn-review {
+            background-color: #17a2b8;
+        }
+
+        .btn-review:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div
+        class="social-bar bg-white border-bottom py-0 px-3 d-flex justify-content-between align-items-center flex-wrap">
+        <!-- Left: Social Icons -->
+        <div class="d-flex gap-3">
+            <a href="#" class="text-dark fs-5"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-linkedin"></i></a>
+        </div>
+
+        <!-- Right: Buttons -->
+        <div class="d-flex gap-2">
+            <a href="#" class="btn btn-sm btn-outline-dark">What's New</a>
+            <a href="#" class="btn btn-sm btn-outline-dark">Login</a>
+        </div>
+    </div>
+
+
+    <!-- main header  -->
+
+    <header class="sticky-header">
+        <div class="brand-section container-fluid">
+            <div class="d-flex align-items-center gap-3">
+                <img src="/images/logo.jpg" alt="CA Logo" style="height: 50px;">
+                <div>
+                    <h5 class="mb-0 fw-bold" style="color:var(--theme-color)">Aavaas Dwaar</h5>
+                    <small class="text-muted">Find Your Dream Home</small>
+                </div>
+            </div>
+            <button class="navbar-toggler d-lg-none ms-auto" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="contact-section d-none d-lg-flex">
+                <span class="contact-text">We feel happy to talk</span>
+                <span class="phone-number text-dark"><i class="bi bi-telephone-fill"></i> +91 9930097046</span>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-section">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="/user/home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/properties">Propeties</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/payment">premium</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/contact">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="search-filter-container">
+        <!-- Search Form -->
+        <form action="/user/search" method="get" class="custom-search-form">
+            <input type="text" name="keyword" class="custom-input" placeholder="Search properties..." />
+            <button type="submit" class="custom-button">
+                🔍 Search
+            </button>
+        </form>
+
+        <!-- Filter Dropdown -->
+        <div class="custom-filter-box">
+            <label for="category" class="custom-label">Filter by Property Type:</label>
+            <select id="category" class="custom-select" onchange="filterProperties(this.value)">
+                <option value="all">All</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+                <option value="villa">Villa</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- All Properties -->
+    <div class="container mt-5">
+        <h2 class="text-center">Properties</h2>
+        <th:block th:if="${propertyPage != null and propertyPage.totalElements > 0}">
+            <div class="property-grid">
+                <div class="property-card" th:each="property : ${propertyPage.content}">
+                    <img th:src="${property.imageUrl}" class="property-img" th:alt="${property.name}">
+                    <div class="property-body">
+                        <div class="property-header">
+                            <h5 class="property-title" th:text="${property.name}">Property Name</h5>
+                            <div class="property-location">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" />
+                                </svg>
+                                <span th:text="${property.location}">Location</span>
+                            </div>
+                        </div>
+                        <p class="property-details">
+                            <strong>Type:</strong> <span th:text="${property.type}">Type</span><br>
+                            <strong>Description:</strong> <span th:text="${property.description}">Description</span>
+                        </p>
+                    </div>
+                    <div class="property-footer">
+                        <span><strong>Status:</strong> <span th:text="${property.status}">Status</span></span>
+                        <span><strong>Price:</strong> ₹<span th:text="${property.price}">Price</span>/month</span>
+                    </div>
+                    <div class="property-buttons">
+                        <a class="btn-pay" href="/user/home/payment">Pay Now</a>
+                        <a th:href="@{/user/reviews/{propertyId}(propertyId=${property.id})}" class="btn-review">View
+                            Reviews</a>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+
+
+    <!--  pagination starts-->
+    <div class="d-flex justify-content-center mt-4">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/user/home/properties(page=${currentPage - 1})}">Previous</a>
+                </li>
+
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/user/home/properties(page=${i})}" th:text="${i + 1}"></a>
+                </li>
+
+                <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                    <a class="page-link" th:href="@{/user/home/properties(page=${currentPage + 1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-col about">
+                <h2>About Aavaas Dwaar</h2>
+                <p>
+                    At Aavaas Dwaar, we open the door to your dream property. Rooted in trust and inspired by tradition,
+                    our name means "Gateway to Home", reflecting our mission to connect people with the perfect space to
+                    call their own. Whether you're buying, selling, or exploring, we simplify real estate with
+                    transparency, technology, and a personal touch.
+                </p>
+                <img src="/images/logo.jpg" alt="Company Logo" class="footer-logo">
+            </div>
+
+            <div class="footer-col links">
+                <h2>Properties in India</h2>
+                <ul>
+                    <li><a href="#">New Delhi</a></li>
+                    <li><a href="#">Chennai</a></li>
+                    <li><a href="#">Gurgaon</a></li>
+                    <li><a href="#">Bangalore</a></li>
+                    <li><a href="#">Ahmedabad</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col links">
+                <h2>QUICK LINKS</h2>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Properties</a></li>
+                    <li><a href="#">Premium</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="contact-box">
+                <i class="icon">&#128205;</i>
+                <div>
+                    <h3>Disclaimer</h3>
+                    <p>The information provided on this website is for general purposes only. Aavaas Dwaar <br>is not
+                        liable
+                        for any decisions made based on listed property data or third-party content.</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <i class="icon">&#128241;</i>
+                <div>
+                    <h3>PHONE</h3>
+                    <p>We feel happy to talk<br>+91 - 9999999999</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <i class="icon">&#9993;</i>
+                <div>
+                    <h3>EMAIL</h3>
+                    <p>Write Your Message<br>Aavaasdwaar@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copy">
+            <p>© <a href="#">www.aavaasdwaar@gmail.com</a> by <strong>Shyam Chaudhary</strong></p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+    <script>
+
+
+        function filterProperties() {
+            let category = document.getElementById("category").value;
+            if (category === "all") {
+
+                window.location.href = "/user/home";
+            } else {
+
+                window.location.href = "/user/filter?type=" + category;
+            }
+            window.location.href = "/user/filter?type=" + category;
+        }
+    </script>
+    <!-- FontAwesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll(
+                '.brand-section, .contact-section, .footer-col, .contact-box'
+            );
+
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const inView = rect.top < window.innerHeight - 50;
+
+                if (inView) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        // Trigger on load, scroll, and a short delay after load for smoothness
+        window.addEventListener('DOMContentLoaded', handleScrollAnimation);
+        window.addEventListener('load', () => {
+            handleScrollAnimation();
+            setTimeout(handleScrollAnimation, 100);
+        });
+        window.addEventListener('scroll', handleScrollAnimation);
+
+    </script>
+</body>
+
+</html>

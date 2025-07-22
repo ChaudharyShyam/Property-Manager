@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Reviews</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .property-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 10px auto;
+            background: #ffffff;
+            padding: 30px;
+            /* border: 2px solid gray; */
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0.08, 0.2, 0.4);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .reviews-section {
+            margin-bottom: 40px;
+        }
+
+        .review-card {
+            background-color: #f9fafb;
+            border-left: 4px solid var(--theme-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        }
+
+        .review-card p {
+            margin: 8px 0;
+        }
+
+        .review-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .review-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .review-form input[type="number"],
+        .review-form textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid gray;
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #fff;
+            transition: border 0.3s;
+        }
+
+        .review-form input[type="number"]:focus,
+        .review-form textarea:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .form-actions {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn.primary {
+            background-color:var(--theme-color);
+            width: 40%;
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background-color: var(--theme-color);
+        }
+
+        .btn.danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn.danger:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div
+        class="social-bar bg-white border-bottom py-0 px-3 d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex gap-3">
+            <a href="#" class="text-dark fs-5"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-linkedin"></i></a>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="#" class="btn btn-sm btn-outline-dark">What's New</a>
+            <a href="#" class="btn btn-sm btn-outline-dark">Login</a>
+        </div>
+    </div>
+    <!-- main header  -->
+    <header class="sticky-header">
+        <div class="brand-section container-fluid">
+            <div class="d-flex align-items-center gap-3">
+                <img src="/images/logo.jpg" alt="CA Logo" style="height: 50px;">
+                <div>
+                    <h5 class="mb-0 fw-bold" style="color:var(--theme-color)">Aavaas Dwaar</h5>
+                    <small class="text-muted">Find Your Dream Home</small>
+                </div>
+            </div>
+            <button class="navbar-toggler d-lg-none ms-auto" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="contact-section d-none d-lg-flex">
+                <span class="contact-text">We feel happy to talk</span>
+                <span class="phone-number text-dark"><i class="bi bi-telephone-fill"></i> +91 9967061610</span>
+            </div>
+        </div>
+    </header>
+    <!-- Main Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-section">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="/user/home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/properties">Propeties</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/payment">premium</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/contact">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- properties details  -->
+
+    <div class="container mt-5">
+        <h1 class="text-center">Property Details</h1>
+        <div class="property-card card mb-4">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img th:src="${property.imageUrl}" class="property-image img-fluid" th:alt="${property.name}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p><strong>Name:</strong> <span th:text="${property.name}"></span></p>
+                        <p><strong>Location:</strong> <span th:text="${property.location}"></span></p>
+                        <p><strong>Price:</strong> ₹<span th:text="${property.price}"></span></p>
+                        <p><strong>Description:</strong> <span th:text="${property.description}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <h2 class="section-title">Reviews</h2>
+            <div class="reviews-section">
+                <div th:each="review : ${reviews}" class="review-card">
+                    <p><strong>Rating:</strong> <span th:text="${review.rating}"></span> / 5</p>
+                    <p><strong>Review:</strong> <span th:text="${review.content}"></span></p>
+                    <form th:action="@{'/user/reviews/delete/' + ${review.id}}" method="post">
+                        <input type="hidden" name="propertyId" th:value="${property.id}" />
+                        <button type="submit" class="btn danger">Delete Review</button>
+                    </form>
+                </div>
+            </div>
+
+            <h2 class="section-title">Add a Review</h2>
+            <form th:action="@{/user/reviews/add}" method="post" class="review-form">
+                <input type="hidden" name="propertyId" th:value="${property.id}" />
+                <div class="form-group">
+                    <label for="rating">Rating (1-5):</label>
+                    <input type="number" id="rating" name="rating" min="1" max="5" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Review:</label>
+                    <textarea id="content" name="content" rows="4" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-col about">
+                <h2>About Aavaas Dwaar</h2>
+                <p>
+                    At Aavaas Dwaar, we open the door to your dream property. Rooted in trust and inspired by tradition,
+                    our name means "Gateway to Home", reflecting our mission to connect people with the perfect space to
+                    call their own. Whether you're buying, selling, or exploring, we simplify real estate with
+                    transparency, technology, and a personal touch.
+                </p>
+                <img src="/images/logo.jpg" alt="Company Logo" class="footer-logo">
+            </div>
+
+            <div class="footer-col links">
+                <h2>Properties in India</h2>
+                <ul>
+                    <li><a href="#">New Delhi</a></li>
+                    <li><a href="#">Chennai</a></li>
+                    <li><a href="#">Gurgaon</a></li>
+                    <li><a href="#">Bangalore</a></li>
+                    <li><a href="#">Ahmedabad</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col links">
+                <h2>QUICK LINKS</h2>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Properties</a></li>
+                    <li><a href="#">Premium</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="contact-box">
+                <i class="icon">&#128205;</i>
+                <div>
+                    <h3>Disclaimer</h3>
+                    <p>The information provided on this website is for general purposes only. Aavaas Dwaar <br>is not
+                        liable
+                        for any decisions made based on listed property data or third-party content.</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <i class="icon">&#128241;</i>
+                <div>
+                    <h3>PHONE</h3>
+                    <p>We feel happy to talk<br>+91 - 9999999999</p>
+                </div>
+            </div>
+
+            <div class="contact-box">
+                <i class="icon">&#9993;</i>
+                <div>
+                    <h3>EMAIL</h3>
+                    <p>Write Your Message<br>Aavaasdwaar@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copy">
+            <p>© <a href="#">www.aavaasdwaar@gmail.com</a> by <strong>Shyam Chaudhary</strong></p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll(
+                '.brand-section, .contact-section, .footer-col, .contact-box'
+            );
+
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const inView = rect.top < window.innerHeight - 50;
+
+                if (inView) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        // Trigger on load, scroll, and a short delay after load for smoothness
+        window.addEventListener('DOMContentLoaded', handleScrollAnimation);
+        window.addEventListener('load', () => {
+            handleScrollAnimation();
+            setTimeout(handleScrollAnimation, 100);
+        });
+        window.addEventListener('scroll', handleScrollAnimation);
+
+    </script>
+
+</body>
+
+</html>

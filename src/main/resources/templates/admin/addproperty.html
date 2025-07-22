@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Property</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+        :root {
+            --theme-color: #B200F2;
+            --footer-background: #1f2b3a;
+            --text-color: white;
+            --hover-color: #461654;
+            --gray-text: rgb(67, 66, 66);
+            --theme-border: #d380f1;
+            --font-family: "Roboto", sans-serif;
+        }
+
+        * {
+            font-family: var(--font-family);
+        }
+
+        /* social- section styling  */
+
+        .social-bar a:hover {
+            color: var(--theme-color);
+            transition: color 0.3s ease;
+        }
+
+        .social-bar a:hover {
+            color: var(--theme-color);
+            transition: color 0.3s ease;
+        }
+
+        .social-bar {
+            margin: 0px 2% 0px;
+            /* border: 2px dotted #d4a625;   */
+        }
+
+        .social-bar .btn-outline-dark:hover {
+            background-color: var(--theme-color);
+            border-color: var(--theme-color);
+            color: white;
+        }
+
+        .d-flex .text-dark {
+            border: 2px dotted var(--theme-color);
+            padding: 2px;
+        }
+
+        /* main header styling  */
+
+        * {
+            font-family: var(--font-family);
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+            background-color: #fff;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+
+        /* .brand-section,
+.contact-section {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.brand-section.visible,
+.contact-section.visible {
+    opacity: 1;
+    transform: scale(1);
+} */
+
+        .navbar-section {
+            padding: 0;
+        }
+
+
+        .nav-link {
+            color: var(--text-color) !important;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background-color: var(--hover-color);
+        }
+
+        .contact-section {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: end;
+        }
+
+        .contact-text {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+        }
+
+        .phone-number {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .nav-item {
+            background-color: var(--theme-color);
+            /* padding: 1px 200px 1px; */
+            border: 3px solid var(--theme-border);
+            width: 35vw;
+            text-align: center;
+        }
+
+        .navbar-toggler {
+            border-color: var(--theme-color);
+            width: 20px;
+            background-color: var(--theme-color);
+
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(178,0,242)' stroke-width='5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        @media (max-width: 1200px) {
+            .nav-item {
+                padding: 1px 1px 1px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .contact-section {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 20px;
+            }
+        }
+
+        /*--------------------------------------------- other styling ---------------------------------------------- */
+        /* Header Section */
+        .header-section {
+            background-color: yellow;
+            color: gray;
+            padding: 2.5rem 0;
+            text-align: center;
+            border-bottom: 5px solid #0056b3;
+            margin-top: -22px;
+        }
+
+        .header-section h1 {
+            margin-top: 22px;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        /* Form Styling */
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            background: var(--theme-color);
+            color:black;
+            padding: 1rem 1.5rem;
+        }
+
+        .form-label{
+            font-weight: 600;
+        }
+        
+        .form-control,.form-select{
+            border: 2px solid gray;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color:var(--theme-border);
+            box-shadow: 0 0 0 0.2rem var(--theme-border);
+        }
+
+        .btn-primary {
+            background-color: var(--theme-color);
+            width: 30%;
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover{
+            background-color: var(--hover-color);
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/properties/">Property Manager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/properties/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/properties/new">Add Property</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/properties/aboutpage">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav> -->
+
+    <div
+        class="social-bar bg-white border-bottom py-0 px-3 d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex gap-3">
+            <a href="#" class="text-dark fs-5"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-dark fs-5"><i class="bi bi-linkedin"></i></a>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="#" class="btn btn-sm btn-outline-dark">What's New</a>
+            <a href="#" class="btn btn-sm btn-outline-dark">Login</a>
+        </div>
+    </div>
+    <!-- main header  -->
+    <header class="sticky-header">
+        <div class="brand-section container-fluid">
+            <div class="d-flex align-items-center gap-3">
+                <img src="/images/logo.jpg" alt="CA Logo" style="height: 50px;">
+                <div>
+                    <h5 class="mb-0 fw-bold" style="color:var(--theme-color)">Aavaas Dwaar</h5>
+                    <small class="text-muted">Find Your Dream Home</small>
+                </div>
+            </div>
+            <button class="navbar-toggler d-lg-none ms-auto" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="contact-section d-none d-lg-flex">
+                <span class="contact-text">We feel happy to talk</span>
+                <span class="phone-number text-dark"><i class="bi bi-telephone-fill"></i> +91 9967061610</span>
+            </div>
+        </div>
+    </header>
+    <!-- Main Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-section">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="/properties/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/properties/new">Propeties</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="/user/home/payment">premium</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/contact">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/home/register">Register</a></li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Header Section -->
+    <div class="header-section">
+        <h1>Add New Property</h1>
+        <p>Fill in the details below to add a new property</p>
+    </div>
+
+    <!-- Form Section -->
+   <div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0">Add New Property</h4>
+        </div>
+        <div class="card-body p-4">
+            <form th:action="@{/properties/save}" th:object="${property}" method="post">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="name" class="form-label">Property Name</label>
+                        <input type="text" id="name" th:field="*{name}" class="form-control" required>
+                        <div th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" id="location" th:field="*{location}" class="form-control" required>
+                        <div th:if="${#fields.hasErrors('location')}" class="text-danger" th:errors="*{location}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" id="price" th:field="*{price}" class="form-control" required>
+                        <div th:if="${#fields.hasErrors('price')}" class="text-danger" th:errors="*{price}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="type" class="form-label">Type</label>
+                        <input type="text" id="type" th:field="*{type}" class="form-control" required>
+                        <div th:if="${#fields.hasErrors('type')}" class="text-danger" th:errors="*{type}"></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" th:field="*{description}" class="form-control" rows="4" required></textarea>
+                        <div th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="status" class="form-label">Status</label>
+                        <select id="status" th:field="*{status}" class="form-select" required>
+                            <option value="">-- Select Status --</option>
+                            <option value="available">Available</option>
+                            <option value="sold">Sold</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('status')}" class="text-danger" th:errors="*{status}"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="imageUrl" class="form-label">Image URL</label>
+                        <input type="url" id="imageUrl" th:field="*{imageUrl}" class="form-control">
+                        <div th:if="${#fields.hasErrors('imageUrl')}" class="text-danger" th:errors="*{imageUrl}"></div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary">Add Property</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <p>
+                All trademarks, logos, and
+                names are properties of their respective owners. &copy; 2025 Aavaas Dwaar
+                . All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRIMiH/pEBgyULrJbFOMeHjLR0ByQBtOJZIRBl7TM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
